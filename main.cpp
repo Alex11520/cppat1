@@ -19,6 +19,8 @@ int main(){
     Node* node6 = new Node(contact6);
 
 
+
+
     int choice;
     Contact_list* list = nullptr; // 在 switch 之前声明 list
 
@@ -26,15 +28,16 @@ int main(){
     int age = -1;
     char gender = ' ';
     Contact new_contact = Contact(name, gender, age);
-    Tree* tree = nullptr; // 在 switch 之前声明 tree
+    Node* new_node = nullptr;
+    std::string target_name = "";
+    Tree* tree = new Tree; // 在 switch 之前声明 tree
 
     hash_table contacts_hash_table;
 
 
 
 
-
-    do{
+     do{
         std::cout << "Menu:\n";
         std::cout << "1. Build the contact list with existing contacts\n";
         std::cout << "2. Add a contact to the contact list\n";
@@ -70,21 +73,37 @@ int main(){
                 std::cout << "Enter contact age: ";
                 std::cin >> age;
                 new_contact = Contact(name, gender, age);
-                Node* new_node = new Node(new_contact);
+                new_node = new Node(new_contact);
                 list->add_end(new_node);
                 break;
             case 3:
-                list->print_list();
+                if(list == nullptr) {
+                    std::cout << "No list.\n"; 
+                } else {
+                    list->print_list();
+                }
                 break;
             case 4:
-                list->get_search_name();
-                list->search_by_name(name);
+                if(list == nullptr) {
+                    std::cout << "No list.\n"; 
+                } else {
+                    list->search_by_name(name);
+                }
                 break;
             case 5:
-                list->sort_by_age();
+                if(list == nullptr) {
+                    std::cout << "No list.\n"; 
+                } else {
+                    list->sort_by_age();
+                }
                 break;
             case 6:
-                list->delete_list(list->head);
+                if(list == nullptr) {
+                    std::cout << "No list.\n"; 
+                } else {
+                    list->delete_list(list->head);
+                }
+                
                 break;
             case 7:
                 tree = new Tree;
@@ -102,10 +121,17 @@ int main(){
                 std::cin >> gender;
                 std::cout << "Enter contact age: ";
                 std::cin >> age;
-                tree->insert(tree->root, new_contact);
+                new_contact = Contact(name, gender, age);
+              
+                    tree->insert(tree->root, new_contact);
+                
                 break;
             case 9:
-                tree->print_tree(tree->root);
+                if(tree == nullptr) {
+                    std::cout << "No tree.\n"; 
+                } else {
+                    tree->print_tree(tree->root);
+                }
                 break;
             case 10:
                 contacts_hash_table.hash_insert(contact1.get_name(), contact1);
@@ -122,33 +148,40 @@ int main(){
                 std::cin >> gender;
                 std::cout << "Enter contact age: ";
                 std::cin >> age;
+                new_contact = Contact(name, gender, age);
                 contacts_hash_table.hash_insert(name, new_contact);
                 break;
             case 12:
-                contacts_hash_table.get_search_name();
                 contacts_hash_table.hash_search(name);
+
                 break;
             case 13:
                 std::cout << "Exiting the program." << std::endl;
-                delete node1;
-                delete node2;
-                delete node3;
-                delete node4;
-                delete node5;
-                delete node6;
+
                 if(list != nullptr) {
-                    list->delete_list(list->head);
-                    delete list;
+                    if(tree == nullptr) {
+                        list->delete_list(list->head);
+                        delete list;
+                    }
+                    
                 }
                 if(tree != nullptr) {
                     tree->deleteTree(tree->root);
                     delete tree;
                 }
+                if(list == nullptr && tree == nullptr){
+                    delete node1;
+                    delete node2;
+                    delete node3;
+                    delete node4;
+                    delete node5;
+                    delete node6;
+                }
                 break;
-            // default:
-            //     std::cout << "Invalid choice. Try again." << std::endl;
+            default:
+                std::cout << "Invalid choice. Try again." << std::endl;
         }
-    } while (choice != 13);
+     } while (choice != 13);
     
 
     return 0;

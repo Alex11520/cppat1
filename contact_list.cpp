@@ -62,15 +62,15 @@ void Contact_list::print_list() {
 
 
 std::string Contact_list::get_search_name() {
-    std::string* target_name = new std::string;
+    std::string name = "";
     std::cout << "Enter the name you want to search: " << std::endl;
-    std::cin >> *target_name;
-    if(*target_name == "") {
+    std::cin >> name;
+    if(name == "") {
         std::cout << "please enter a valid name" << std::endl;
         std::cout << "Enter the name you want to search: " << std::endl;
-        std::cin >> *target_name;
+        std::cin >> name;
     }
-    return *target_name;
+    return name;
 }
 void Contact_list::search_by_name(std::string name){
     name = get_search_name();
