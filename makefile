@@ -1,8 +1,8 @@
 CXX = clang++
 CXXFLAGS = -std=c++17
 
-TARGET = main.o contact.o node.o contact_list.o tNode.o tree.o
-SOURCES = main.cpp contact.cpp node.cpp contact_list.cpp tNode.cpp tree.cpp
+TARGET = main.o contact.o node.o contact_list.o tNode.o tree.o hash_table.o
+SOURCES = main.cpp contact.cpp node.cpp contact_list.cpp tNode.cpp tree.cpp hash_table.cpp
 HEADERS = at1.h
 
 main: $(TARGET) $(HEADERS)

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
+
 
 
 class Contact {
@@ -39,12 +41,13 @@ public:
     Contact contact;
 
     //constructor
-    Node(Contact &person);
+    Node(Contact person);
 
     //link to other nodes
     void link_prev(Node* prevNode);
     void link_next(Node* nextNode);
     void print_node();
+    
 };
 
 
@@ -63,27 +66,24 @@ public:
     void add_front(Node* node);
     void print_list();
     std::string get_search_name();
-    void search_by_name();
+    void search_by_name(std::string name);
+    void swap_nodes(Node* node1, Node* node2);
+    void sort_by_age();
+    void delete_list(Node* node);
 };
 
 
 class TNode {
 public:
     //attribute
-    TNode* parent;
     TNode* left;
     TNode* right;
     Contact contact;
 
     //constructor
-    TNode(Contact &person);
+    TNode(Contact person);
 
     //method
-    void link_left(TNode* node);
-    void link_right(TNode* node);
-    void link_parent_left(TNode* node);
-    void link_parent_right(TNode* node);
-    
     void print_tNode();
 };
 
@@ -97,7 +97,23 @@ public:
     Tree();
 
     //method
-    void print_tree();
+    void insert(TNode*& node, Contact person);
+    void print_tree(TNode* curr);
+    void deleteTree(TNode* node);
+};
+
+class hash_table {
+private:
+    static const int TABLE_SIZE = 100;
+    std::vector<std::list<Contact>> table;
+
+    int hash(const std::string& key);
+
+public:
+    hash_table();
+    void hash_insert(const std::string& key, const Contact& contact);
+    std::string get_search_name();
+    Contact hash_search(std::string name);
 };
 
 #endif

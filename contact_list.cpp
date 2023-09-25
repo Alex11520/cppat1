@@ -60,24 +60,25 @@ void Contact_list::print_list() {
     }
 }
 
+
 std::string Contact_list::get_search_name() {
-    std::string target_name;
+    std::string* target_name = new std::string;
     std::cout << "Enter the name you want to search: " << std::endl;
-    std::cin >> target_name;
-    if(target_name == "") {
+    std::cin >> *target_name;
+    if(*target_name == "") {
         std::cout << "please enter a valid name" << std::endl;
         std::cout << "Enter the name you want to search: " << std::endl;
-        std::cin >> target_name;
+        std::cin >> *target_name;
     }
-    return target_name;
+    return *target_name;
 }
-void Contact_list::search_by_name(){
-    std::string target_name = get_search_name();
+void Contact_list::search_by_name(std::string name){
+    name = get_search_name();
     Node* curr = this->head;
     std::cout << "Search result: " << std::endl;
     while(curr->next != nullptr){
 
-        if(curr->contact.get_name() == target_name){
+        if(curr->contact.get_name() == name){
             curr->print_node();
         }
 
@@ -85,8 +86,52 @@ void Contact_list::search_by_name(){
         
     }
 
-    if(curr->contact.get_name() == target_name){
+    if(curr->contact.get_name() == name){
         curr->print_node();
     }
     return;
+}
+
+void Contact_list::swap_nodes(Node* node1, Node* node2) {
+    Contact temp = node1->contact;
+    node1->contact = node2->contact;
+    node2->contact = temp;
+}
+
+void Contact_list::sort_by_age() {
+    if (head == nullptr || head == tail) {
+        // 如果列表为空或只有一个节点，无需排序
+        return;
+    }
+
+    bool swapped;
+    Node* current;
+    Node* lastSorted = nullptr;
+
+    do {
+        swapped = false;
+        current = head;
+
+        while (current->next != lastSorted) {
+            if (current->contact.get_age() > current->next->contact.get_age()) {
+                swap_nodes(current, current->next);
+                swapped = true;
+            }
+            current = current->next;
+        }
+
+        lastSorted = current;
+
+    } while (swapped);
+}
+
+void Contact_list::delete_list(Node* node) {
+    if(node == nullptr) {
+        return;
+    }
+
+    delete_list(node->next);
+    delete node;
+    head = nullptr;
+    tail = nullptr;
 }

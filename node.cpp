@@ -5,7 +5,7 @@
 
 //Node class
 //constructor
-Node::Node(Contact &person) : contact(person){
+Node::Node(Contact person) : contact(person){
     prev = nullptr;
     next = nullptr;
 }
@@ -33,3 +33,4 @@ void Node::link_next(Node* nextNode) {
 void Node::print_node() {
     contact.print_contact();
 }
+
